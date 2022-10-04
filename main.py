@@ -6,8 +6,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-# token = os.getenv("API_TOKEN_GITHUB")
-token = "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"
+token = os.getenv("API_TOKEN_GITHUB")
 
 payload = {}
 headers = {
@@ -29,7 +28,8 @@ def get_repository_list():
 def get_repository_data(repo_name):
     url = f"https://api.github.com/repos/ow-gryphon/{repo_name}/traffic/clones"
     response = requests.request("GET", url, headers=headers, data=payload)
-    assert response.status_code == 200
+    if response.status_code != 200:
+        raise RuntimeError(f"Status code: {response.status_code}\n{response.text}")
 
     return json.loads(response.text)
 
