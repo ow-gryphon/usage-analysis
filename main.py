@@ -6,7 +6,9 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-token = os.getenv("API_TOKEN_GITHUB")
+# token = os.getenv("API_TOKEN_GITHUB")
+token = "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"
+
 payload = {}
 headers = {
     'Accept': 'application/vnd.github+json',
@@ -19,7 +21,7 @@ def get_repository_list():
     if http_response.status_code != 200:
         raise RuntimeError(f"Status code: {http_response.status_code}\n{http_response.text}")
 
-    soup = BeautifulSoup(http_response.text)
+    soup = BeautifulSoup(http_response.text, features="html.parser")
     cards = soup.findAll("a", **{"class": "card"})
     return list(map(lambda a: a['href'][:-1], cards))
 
