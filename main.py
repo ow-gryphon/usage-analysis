@@ -16,7 +16,8 @@ headers = {
 
 def get_repository_list():
     http_response = requests.get("https://ow-gryphon.github.io/grypi/")
-    assert http_response.status_code == 200
+    if http_response.status_code != 200:
+        raise RuntimeError(f"Status code: {http_response.status_code}\n{http_response.text}")
 
     soup = BeautifulSoup(http_response.text)
     cards = soup.findAll("a", **{"class": "card"})
