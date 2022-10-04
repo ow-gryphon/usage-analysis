@@ -1,14 +1,16 @@
 import json
+import os
 from pathlib import Path
 
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
+token = os.getenv("API_TOKEN_GITHUB")
 payload = {}
 headers = {
     'Accept': 'application/vnd.github+json',
-    'Authorization': 'Bearer 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'
+    'Authorization': f'Bearer {token}'
 }
 
 
