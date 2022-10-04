@@ -1,0 +1,25 @@
+# This is a basic workflow to help you get started with Actions
+name: Fetch data from github API
+on:
+  # Triggers the workflow every 5 minutes
+  schedule:
+    - cron: "*/5 * * * *"
+#    - cron: "* * * * 0"
+
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Clone repo
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Run the python script to get data
+        run: python main.py
+
+      - name: Push the files to github
+        run: git status && git add . && git commit -m "updating data" && git push
