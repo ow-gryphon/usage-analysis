@@ -23,4 +23,3 @@ jobs:
 
       - name: Push the files to github
         run: git status && git add . && git commit -m "updating data" && git push
-
