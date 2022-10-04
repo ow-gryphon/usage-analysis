@@ -3,7 +3,7 @@ name: Fetch data from github API
 on:
   # Triggers the workflow every 5 minutes
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "*/7 * * * *"
 #    - cron: "* * * * 0"
 
 jobs:
