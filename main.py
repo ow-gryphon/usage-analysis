@@ -38,12 +38,13 @@ repositories = get_repository_list()
 repositories.append("gryphon")
 
 for repo in repositories:
-    def write_data(data):
+    def write_data(data, path):
         (
             data
                 .reset_index()
-                .to_csv(repo_data, header=True, index=False)
+                .to_csv(path, header=True, index=False)
         )
+
     repo_data = Path.cwd() / "data" / f"{repo}.csv"
     clones = get_repository_data(repo)["clones"]
 
@@ -63,22 +64,27 @@ for repo in repositories:
     #     df = days.join(df)
 
     try:
+        print(df)
         existing = pd.read_csv(repo_data)
         existing.timestamp = existing.timestamp.map(lambda x: pd.Timestamp(x).date())
         existing = existing.set_index("timestamp")
     except FileNotFoundError:
-        write_data(df.dropna())
+        print(f"Path does not exist yet {repo_data}")
+        write_data(df.dropna(), repo_data)
         continue
 
     final_df = (
         pd.concat([existing, df])
             .dropna()
-            .drop_duplicates()
+            .drop_duplicates(keep='last')
             .sort_values("timestamp")
     )
 
     print()
     print(repo)
+    print("added")
+    print(df)
+    print("final")
     print(final_df)
 
-    write_data(final_df)
+    write_data(final_df, repo_data)
