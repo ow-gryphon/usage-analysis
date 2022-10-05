@@ -19,7 +19,7 @@ jobs:
 
       - name: Run the python script to get data
         env:
-          API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         run: python -m pip install -r requirements.txt && python main.py
 
       - name: Push the files to github
