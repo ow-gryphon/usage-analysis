@@ -34,17 +34,14 @@ def get_repository_data(repo_name):
     return json.loads(response.text)
 
 
+def write_data(data, path):
+    data.to_csv(path, header=True, index=False)
+
+
 repositories = get_repository_list()
 repositories.append("gryphon")
 
 for repo in repositories:
-    def write_data(data, path):
-        (
-            data
-                .reset_index()
-                .to_csv(path, header=True, index=False)
-        )
-
     repo_data = Path.cwd() / "data" / f"{repo}.csv"
     clones = get_repository_data(repo)["clones"]
 
@@ -76,7 +73,8 @@ for repo in repositories:
     final_df = (
         pd.concat([existing, df])
             .dropna()
-            .drop_duplicates(keep='last')
+            .reset_index()
+            .drop_duplicates(subset=['timestamp'], keep='last')
             .sort_values("timestamp")
     )
 
@@ -87,4 +85,4 @@ for repo in repositories:
     print("final")
     print(final_df)
 
-    write_data(final_df, repo_data)
+    # write_data(final_df, repo_data)
