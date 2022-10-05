@@ -85,4 +85,4 @@ for repo in repositories:
     print("final")
     print(final_df)
 
-    # write_data(final_df, repo_data)
+    write_data(final_df, repo_data)
