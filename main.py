@@ -16,7 +16,7 @@ headers = {
 
 
 def get_repository_list():
-    http_response = requests.get("https://ow-gryphon.github.io/grypi/")
+    http_response = requests.get("https://ow-gryphon.github.io/grypi/", verify=False)
     if http_response.status_code != 200:
         raise RuntimeError(f"Status code: {http_response.status_code}\n{http_response.text}")
 
@@ -27,7 +27,7 @@ def get_repository_list():
 
 def get_repository_data(repo_name):
     url = f"https://api.github.com/repos/ow-gryphon/{repo_name}/traffic/clones"
-    response = requests.request("GET", url, headers=headers, data=payload)
+    response = requests.request("GET", url, headers=headers, data=payload, verify=False)
     if response.status_code != 200:
         raise RuntimeError(f"Status code: {response.status_code}\n{response.text}")
 
@@ -50,7 +50,7 @@ for repo in repositories:
     if not len(df):
         continue
 
-    df.timestamp = df.timestamp.map(lambda x: pd.Timestamp(x).date())
+    df['timestamp'] = df['timestamp'].map(lambda x: pd.Timestamp(x).date())
     df = df.set_index("timestamp")
 
     # if len(df) != 14:
@@ -63,7 +63,7 @@ for repo in repositories:
     try:
         print(df)
         existing = pd.read_csv(repo_data)
-        existing.timestamp = existing.timestamp.map(lambda x: pd.Timestamp(x).date())
+        existing['timestamp'] = existing['timestamp'].map(lambda x: pd.Timestamp(x).date())
         existing = existing.set_index("timestamp")
     except FileNotFoundError:
         print(f"Path does not exist yet {repo_data}")
