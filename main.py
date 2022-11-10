@@ -63,6 +63,7 @@ for repo in repositories:
     try:
         print(df)
         existing = pd.read_csv(repo_data)
+        print(existing.head())
         existing['timestamp'] = existing['timestamp'].map(lambda x: pd.Timestamp(x).date())
         existing = existing.set_index("timestamp")
     except FileNotFoundError:
