@@ -51,8 +51,7 @@ for repo in repositories:
         continue
 
     df['timestamp'] = df['timestamp'].map(lambda x: pd.Timestamp(x).date())
-    df = df.set_index("timestamp")
-
+    
     # if len(df) != 14:
     #     days = pd.date_range(end=pd.Timestamp.now().date() - pd.Timedelta("1D"), periods=14)
     #     days = pd.DataFrame(dict(timestamp=days))
@@ -61,11 +60,8 @@ for repo in repositories:
     #     df = days.join(df)
 
     try:
-        print(df)
         existing = pd.read_csv(repo_data)
-        print(existing.head())
         existing['timestamp'] = existing['timestamp'].map(lambda x: pd.Timestamp(x).date())
-        existing = existing.set_index("timestamp")
     except FileNotFoundError:
         print(f"Path does not exist yet {repo_data}")
         write_data(df.dropna(), repo_data)
