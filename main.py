@@ -14,7 +14,6 @@ headers = {
     'Authorization': f'Bearer {token}'
 }
 
-
 def get_repository_list():
     http_response = requests.get("https://ow-gryphon.github.io/grypi/", verify=False)
     if http_response.status_code != 200:
