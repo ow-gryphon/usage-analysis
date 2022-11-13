@@ -6,6 +6,11 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
+# Suppress a specific warning related to not using SSL verify
+import warnings
+warnings.filterwarnings("ignore", message="Unverified HTTPS request is being made to host")
+
+
 token = os.getenv("API_TOKEN_GITHUB")
 
 payload = {}
@@ -69,7 +74,7 @@ for repo in repositories:
     final_df = (
         pd.concat([existing, df])
             .dropna()
-            .reset_index()
+            .reset_index(drop=True)
             .drop_duplicates(subset=['timestamp'], keep='last')
             .sort_values("timestamp")
     )
