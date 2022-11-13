@@ -35,7 +35,7 @@ jobs:
           git add .
 
           echo "GIT COMMIT"
-          git commit -m "updating data"
+          git diff-index --quiet HEAD || git commit -m "updating data"
 
           echo "GIT PUSH"
-          git push
+          git diff-index --quiet HEAD || git push
