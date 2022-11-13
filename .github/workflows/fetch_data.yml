@@ -35,7 +35,7 @@ jobs:
           git add .
 
           echo "GIT COMMIT"
-          git commit -m "updating data"
+          git commit -m "updating data" --allow-empty
 
           echo "GIT PUSH"
           git push
