@@ -48,8 +48,10 @@ repositories.append("gryphon")
 
 for repo in repositories:
     repo_data = Path.cwd() / "data" / f"{repo}.csv"
-    clones = get_repository_data(repo)["clones"]
-
+    try:
+        clones = get_repository_data(repo)["clones"]
+    except:
+        continue
     df = pd.DataFrame(clones)
 
     if not len(df):
@@ -79,12 +81,5 @@ for repo in repositories:
             .drop_duplicates(subset=['timestamp'], keep='last')
             .sort_values("timestamp")
     )
-
-    print()
-    print(repo)
-    print("added")
-    print(df)
-    print("final")
-    print(final_df)
 
     write_data(final_df, repo_data)
