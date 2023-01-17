@@ -33,6 +33,7 @@ def get_repository_data(repo_name):
     url = f"https://api.github.com/repos/ow-gryphon/{repo_name}/traffic/clones"
     response = requests.request("GET", url, headers=headers, data=payload, verify=False)
     if response.status_code != 200:
+        print(f"Failed to get repo information for {repo_name}")
         raise RuntimeError(f"Status code: {response.status_code}\n{response.text}")
 
     return json.loads(response.text)
