@@ -53,7 +53,6 @@ for repo in repositories:
     except:
         continue
     df = pd.DataFrame(clones)
-    print(f"{repo}: {df}")
 
     if df.shape[0] == 0:
         continue
@@ -84,3 +83,5 @@ for repo in repositories:
     )
 
     write_data(final_df, repo_data)
+    print(f"Successfully wrote to {repo_data}")
+    print(final_df)
