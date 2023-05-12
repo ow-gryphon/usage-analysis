@@ -53,7 +53,7 @@ for repo in repositories:
     except:
         continue
     df = pd.DataFrame(clones)
-    print(f"{repo}: df.shape[0]")
+    print(f"{repo}: {df}")
 
     if df.shape[0] == 0:
         continue
