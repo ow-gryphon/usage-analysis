@@ -53,8 +53,9 @@ for repo in repositories:
     except:
         continue
     df = pd.DataFrame(clones)
+    print(f"{repo}: df.shape[0]")
 
-    if not len(df):
+    if df.shape[0] == 0:
         continue
 
     df['timestamp'] = df['timestamp'].map(lambda x: pd.Timestamp(x).date())
